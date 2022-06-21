@@ -11,6 +11,9 @@ Firstly change database credentials in `project folder\Web.config`
 
 You can change VAT value in `project folder\Web.config` 
 
+##### Default login credentials
+`Login: admin@admin.com, password: 123456`
+
 `<add key="VAT" value="12"/>`
 
 You can get Product Audits by get request `http://localhost:58249/Home/Audit` as JSON data
