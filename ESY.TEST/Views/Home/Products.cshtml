@@ -1,0 +1,40 @@
+﻿@{ ViewBag.Title = "Products"; }
+<h2>@ViewBag.Title.</h2>
+@if (this.User.IsInRole("administrator"))
+{
+    <h3><a href="@Url.Action("CreateProduct", "Home")">Create new</a></h3>
+}
+@model IEnumerable<ESY.TEST.Models.ProductModel>
+@using ESY.TEST.Helper
+
+<table class="table table-hover">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total Price with VAT</th>
+        @if (this.User.IsInRole("administrator"))
+        {
+            <th>Action</th>
+        }
+    </tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.ID</td>
+            <td>@product.Name</td>
+            <td>@product.Quantity</td>
+            <td>@product.Price</td>
+            <td>
+                @{
+                    var Tax = Helper.GetTotalPrice(@product.Price * @product.Quantity, @product.Price).ToString();
+                } @Html.DisplayName(Tax)
+            </td>
+            @if (this.User.IsInRole("administrator"))
+            {
+                <td><a href="@Url.Action("EditProduct", "Home", new { ID = @product.ID })"><i class="glyphicon glyphicon-pencil"></i></a> <a href="@Url.Action("DeleteProduct", "Home", new { ID = @product.ID })"><i class="glyphicon glyphicon-trash"></i></a></td>
+            }
+        </tr>
+    }
+</table>
